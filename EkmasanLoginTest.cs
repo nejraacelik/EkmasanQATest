@@ -68,6 +68,46 @@ namespace EkmasanQATest
 
         }
 
+        [TestMethod]
+        public void EkmasanWrongLogin()
+        {
+            string URL = parameters.Url;
+            string subject = "";
+            Url.GoTo(URL);
+            string user22 = "user22";
+            string password1 = "password1";
+            try
+            {
+                var username = Driver.Instance.FindElement(By.Id("Username"));
+                Assert.IsNotNull(username);
+                username.SendKeys(user22);
+                var password = Driver.Instance.FindElement(By.Id("Password"));
+                Assert.IsNotNull(password);
+                password.SendKeys(password1);
+                var signinbutton = Driver.Instance.FindElement(By.CssSelector("div > div > div >div > form> div.text-center > button"));
+                Assert.IsNotNull(signinbutton);
+                signinbutton.Click();
+
+                Thread.Sleep(500);
+
+                var messageerror = Driver.Instance.FindElement(By.CssSelector("body > div.authincation.h-100vh > div > div > div.col-md-6 > div > div > div > div > div"));
+                Assert.IsNotNull(messageerror);
+
+                Functions.TakeScreenShot();
+
+
+
+            }
+            catch (Exception e)
+            {
+                Functions.WriteInto(filePath, "Error" + e.Message);
+                Assert.Fail();
+
+            }
+
+
+        }
+
 
         [TestCleanup]
         public void Cleanup()
