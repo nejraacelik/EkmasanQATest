@@ -10,33 +10,14 @@ using System.Linq;
 namespace EkmasanQATest
 {
     [TestClass]
-    public class EkmasanLoginTest
+    public class EkmasanLoginTest :EkmasanBaseTest
     {
-        private object openUrl;
-        private TestArguments parameters;
-        private object subject;
-        private object body;
-        private string filePath = @"C:\Ekmasan Test Configuration\LogFile.txt";
-
-        [TestInitialize]
-
-        public void Init()
-        {
-            var downloadDirectory = @"C:\Files";
-            var driverDirectory = @"C:\Drivers\";
-            var configFilePath = @"C:\Ekmasan Test Configuration\config.xml";
-
-            Functions.WriteInto(filePath, "Start of init");
-            parameters = new TestArguments(configFilePath);
-            Driver.Initiliaze(driverDirectory, downloadDirectory, parameters.Browser);
-            Functions.WriteInto(filePath, "End of init");
-        }
+      
 
         [TestMethod]
         public void EkmasanEmptyLogin()
         {
-            string URL = parameters.Url;
-            string subject = "";
+            string URL = Parameters.Url;
             Url.GoTo(URL);
             
             try
@@ -63,7 +44,7 @@ namespace EkmasanQATest
             }
             catch (Exception e)
             {
-                Functions.WriteInto(filePath, "Error" + e.Message);
+                Functions.WriteInto(FilePath, "Error" + e.Message);
                 Assert.Fail();  
 
             }
@@ -74,8 +55,7 @@ namespace EkmasanQATest
         [TestMethod]
         public void EkmasanWrongLogin()
         {
-            string URL = parameters.Url;
-            string subject = "";
+            string URL = Parameters.Url;
             Url.GoTo(URL);
             string user22 = "user22";
             string password1 = "password1";
@@ -103,7 +83,7 @@ namespace EkmasanQATest
             }
             catch (Exception e)
             {
-                Functions.WriteInto(filePath, "Error" + e.Message);
+                Functions.WriteInto(FilePath, "Error" + e.Message);
                 Assert.Fail();
 
             }
@@ -112,7 +92,7 @@ namespace EkmasanQATest
 
         public void EkmasanCorrectLogin()
         {
-            bool isLoged = Login.EkmasanLogin(Driver.Instance, parameters.Url);
+            bool isLoged = Login.EkmasanLogin(Driver.Instance, Parameters.Url);
             Assert.IsTrue(isLoged);
             //string URL = parameters.Url;
             //    string subject = "";
@@ -148,12 +128,7 @@ namespace EkmasanQATest
         }
 
 
-        [TestCleanup]
-        public void Cleanup()
-        {
-            Driver.Close();
-        }
-
+       
 
     }
 }
