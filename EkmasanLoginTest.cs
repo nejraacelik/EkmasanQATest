@@ -108,41 +108,44 @@ namespace EkmasanQATest
 
             }
         }
-            [TestMethod]
-            public void EkmasanCorrectLogin()
-            {
-                string URL = parameters.Url;
-                string subject = "";
-                var loginFilePath = @"C:\Ekmasan Test Configuration\Login.txt";
-                Url.GoTo(URL);
-               List<string>lines=File.ReadLines(loginFilePath).ToList();
-                try
-                {
-                    var username = Driver.Instance.FindElement(By.Id("Username"));
-                    Assert.IsNotNull(username);
-                    username.SendKeys(lines[0]);
-                    var password = Driver.Instance.FindElement(By.Id("Password"));
-                    Assert.IsNotNull(password);
-                    password.SendKeys(lines[1]);
-                    var signinbutton = Driver.Instance.FindElement(By.CssSelector("button[class='btn btn-primary btn-block']"));
-                    Assert.IsNotNull(signinbutton);
-                    signinbutton.Click();
+        [TestMethod]
 
-                    Thread.Sleep(500);
-                    Functions.TakeScreenShot();
+        public void EkmasanCorrectLogin()
+        {
+            bool isLoged = Login.EkmasanLogin(Driver.Instance, parameters.Url);
+            Assert.IsTrue(isLoged);
+            //string URL = parameters.Url;
+            //    string subject = "";
+            //    var loginFilePath = @"C:\Ekmasan Test Configuration\Login.txt";
+            //    Url.GoTo(URL);
+            //   List<string> lines=File.ReadLines(loginFilePath).ToList();
+            //    try
+            //    {
+            //        var username = Driver.Instance.FindElement(By.Id("Username"));
+            //        Assert.IsNotNull(username);
+            //        username.SendKeys(lines[0]);
+            //        var password = Driver.Instance.FindElement(By.Id("Password"));
+            //        Assert.IsNotNull(password);
+            //        password.SendKeys(lines[1]);
+            //        var signinbutton = Driver.Instance.FindElement(By.CssSelector("button[class='btn btn-primary btn-block']"));
+            //        Assert.IsNotNull(signinbutton);
+            //        signinbutton.Click();
 
-                var adminLink = Driver.Instance.FindElement(By.CssSelector("body > div.header > div > div > div > div.float-right > ul > li > span"));
-                Assert.IsNotNull(adminLink);
+            //        Thread.Sleep(500);
+            //        Functions.TakeScreenShot();
 
-                }
-                catch (Exception e)
-                {
-                    Functions.WriteInto(filePath, "Error" + e.Message);
-                    Assert.Fail();
+            //    var adminLink = Driver.Instance.FindElement(By.CssSelector("body > div.header > div > div > div > div.float-right > ul > li > span"));
+            //    Assert.IsNotNull(adminLink);
 
-                }
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        Functions.WriteInto(filePath, "Error" + e.Message);
+            //        Assert.Fail();
 
-            }
+            //    }
+
+        }
 
 
         [TestCleanup]
